@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReceiptToOutreach",
+  "description": "Schema for mapping a verifiable Kerna-Ledger / VERA / Q-Reg receipt into structured outreach artifacts. Deterministic fields only.",
+  "type": "object",
+  "required": ["receipt_id", "merkle_root", "gate_state", "entity_id", "outreach_type"],
+  "properties": {
+    "receipt_id": { "type": "string", "minLength": 8 },
+    "merkle_root": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "gate_state": { "type": "string", "enum": ["GREEN", "YELLOW", "BLACK"] },
+    "entity_id": { "type": "string" },
+    "interval": { "type": "string" },
+    "policy_citations": { "type": "array", "items": { "type": "string" } },
+    "outreach_type": { "type": "string", "enum": ["email", "linkedin", "proposal", "thread"] },
+    "target_role": { "type": "string" },
+    "claim_summary": { "type": "string", "maxLength": 280 },
+    "proof_link": { "type": "string", "format": "uri" }
+  },
+  "additionalProperties": false
+}
