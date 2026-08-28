@@ -1,4 +1,4 @@
-name: CI
+name: Unignorable CI
 
 on:
   push:
@@ -7,15 +7,17 @@ on:
     branches: [main]
 
 jobs:
-  validate:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - name: Syntax check
-        run: python -m py_compile src/cli.py
-      - name: Schema presence
-        run: test -f schema/receipt_to_outreach.json && echo "schema ok"
+          python-version: "3.12"
+      - run: pip install pytest
+      - run: python -m pytest tests/ -q
+      - name: Hygiene
+        run: |
+          test -f LICENSE
+          test -f README.md
+          test -f .gitignore
